@@ -1,0 +1,10 @@
+<resources>
+    <style name="Theme.AplikasiKeuangan" parent="android:style/Theme.Material.Light.NoActionBar">
+        <item name="android:fontFamily">sans</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:colorAccent">@color/purple_500</item>
+        <item name="android:windowSplashScreenBackground">#FFF0F7</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/logo</item>
+        <item name="android:windowSplashScreenIconBackgroundColor">#FFF0F7</item>
+    </style>
+</resources>
