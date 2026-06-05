@@ -23,11 +23,15 @@ class TambahTransaksiActivity : Activity() {
     private var modeEdit = false
     private var idTransaksi = -1
 
+    private var jumlahLama = 0
+    private var tipeLama = "pemasukan"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tambah_transaksi)
 
         dbHelper = DatabaseHelper(this)
+
         tvFormTitle = findViewById(R.id.tvFormTitle)
         tvFormSubtitle = findViewById(R.id.tvFormSubtitle)
         etNama = findViewById(R.id.etNama)
@@ -53,9 +57,13 @@ class TambahTransaksiActivity : Activity() {
 
     private fun isiDataEdit() {
         idTransaksi = intent.getIntExtra("id", -1)
+
         val nama = intent.getStringExtra("nama") ?: ""
         val jumlah = intent.getIntExtra("jumlah", 0)
         val tipe = intent.getStringExtra("tipe") ?: "pemasukan"
+
+        jumlahLama = jumlah
+        tipeLama = tipe
 
         tvFormTitle.text = "Edit Transaksi"
         tvFormSubtitle.text = "Perbarui data transaksi yang sudah dicatat"
@@ -91,7 +99,19 @@ class TambahTransaksiActivity : Activity() {
             return
         }
 
-        val tipe = if (rbPemasukan.isChecked) "pemasukan" else "pengeluaran"
+        val tipe = if (rbPemasukan.isChecked) {
+            "pemasukan"
+        } else {
+            "pengeluaran"
+        }
+
+        val saldoSekarang = dbHelper.getSaldoSekarang()
+        val saldoUntukCek = hitungSaldoUntukCek(saldoSekarang)
+
+        if (tipe == "pengeluaran" && jumlah > saldoUntukCek) {
+            Toast.makeText(this, "Stop, saldo anda tidak cukup", Toast.LENGTH_SHORT).show()
+            return
+        }
 
         if (modeEdit && idTransaksi != -1) {
             dbHelper.updateTransaksi(idTransaksi, nama, jumlah, tipe)
@@ -102,5 +122,15 @@ class TambahTransaksiActivity : Activity() {
         }
 
         finish()
+    }
+
+    private fun hitungSaldoUntukCek(saldoSekarang: Int): Int {
+        if (!modeEdit) return saldoSekarang
+
+        return if (tipeLama == "pemasukan") {
+            saldoSekarang - jumlahLama
+        } else {
+            saldoSekarang + jumlahLama
+        }
     }
 }

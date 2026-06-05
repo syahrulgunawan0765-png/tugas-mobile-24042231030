@@ -47,3 +47,5 @@ Format pengumpulan sesuai tugas:
 - Link repository GitHub
 - README berisi screenshot dan cara menjalankan aplikasi
 
+## Validasi Saldo
+Aplikasi menolak transaksi pengeluaran yang lebih besar dari saldo saat ini. Jika saldo tidak cukup, aplikasi menampilkan pesan: **Stop, saldo anda tidak cukup**. Validasi ini juga berlaku saat mengedit transaksi agar saldo tidak menjadi minus.

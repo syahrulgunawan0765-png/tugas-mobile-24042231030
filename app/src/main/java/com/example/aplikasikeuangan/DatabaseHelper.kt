@@ -89,4 +89,27 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         db.close()
         return result
     }
+
+
+    fun getSaldoSekarang(): Int {
+        var saldo = 0
+        val db = readableDatabase
+        val cursor = db.rawQuery("SELECT jumlah, tipe FROM $TABLE_NAME", null)
+
+        while (cursor.moveToNext()) {
+            val jumlah = cursor.getInt(cursor.getColumnIndexOrThrow("jumlah"))
+            val tipe = cursor.getString(cursor.getColumnIndexOrThrow("tipe"))
+
+            if (tipe == "pemasukan") {
+                saldo += jumlah
+            } else {
+                saldo -= jumlah
+            }
+        }
+
+        cursor.close()
+        db.close()
+        return saldo
+    }
+
 }
