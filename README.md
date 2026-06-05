@@ -49,3 +49,13 @@ Format pengumpulan sesuai tugas:
 
 ## Validasi Saldo
 Aplikasi menolak transaksi pengeluaran yang lebih besar dari saldo saat ini. Jika saldo tidak cukup, aplikasi menampilkan pesan: **Stop, saldo anda tidak cukup**. Validasi ini juga berlaku saat mengedit transaksi agar saldo tidak menjadi minus.
+
+## Preview Aplikasi
+
+![Preview 1](1.jpeg)
+
+![Preview 2](2.jpeg)
+
+![Preview 3](3.jpeg)
+
+![Preview 4](4.jpeg)
